@@ -38,7 +38,7 @@ Description & Solution: Site in question has a login page on the home screen. Cl
 
 ![image](https://github.com/user-attachments/assets/9b8bc3d7-d957-472b-b898-b373d05620e8)
 
-****![image](https://github.com/user-attachments/assets/77b309ad-975e-4af1-94ad-b21ddb0cc674)
+![image](https://github.com/user-attachments/assets/77b309ad-975e-4af1-94ad-b21ddb0cc674)
 
 Once logged in as admin, the attacker can then exploit further vulnerabilities to harvest sensitive information, deface the site, or deploy phishing campaigns.
 
