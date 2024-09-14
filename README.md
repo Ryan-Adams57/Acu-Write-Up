@@ -11,12 +11,15 @@ Location of Vulnerability: http://testphp.vulnweb.com/login.php
 
 Description & Solution: Login page is susceptible to SQL Injection, allowing any user to login as admin. Using SQLMap and BurpSuite, I was able to identify the string ‘ or 1=1 or ‘’=’ can be injected into the tbUsername field to login as ‘admin’.
 
+![image](https://github.com/user-attachments/assets/33624fab-fb24-4544-930c-70f28318b59d)
 
 Once logged in, I was able to use the admin SessionID to continue test with SQLMap.
 
 This revealed that there were more exploitable fields with payloads on the site, such as time-based Blind and Microsoft SQL Server, Stacked Queries.
 
+![image](https://github.com/user-attachments/assets/e8e5d793-0ac8-4787-b064-4300b35d9e8f)
 
+![image](https://github.com/user-attachments/assets/7f8ef7b4-7286-4f2a-9ec9-0e527fdba454)
 
 Using the Microsoft SQL Server, Stacked Queries payload discovered by SQLMap, I was able to get a list of six databases in testasp.vulnweb.com:
 
@@ -33,7 +36,9 @@ Location of Vulnerability: http://testhtml5.vulnweb.com/#/popular
 
 Description & Solution: Site in question has a login page on the home screen. Clicking on it allows a any user to sign in without requiring password.
 
+![image](https://github.com/user-attachments/assets/9b8bc3d7-d957-472b-b898-b373d05620e8)
 
+****![image](https://github.com/user-attachments/assets/77b309ad-975e-4af1-94ad-b21ddb0cc674)
 
 Once logged in as admin, the attacker can then exploit further vulnerabilities to harvest sensitive information, deface the site, or deploy phishing campaigns.
 
@@ -52,7 +57,6 @@ Description & Solution: I first reviewed the website and was paying close attent
 
 I then followed regular web traffic using Wireshark to identify the OS (Ubuntu), which told me that I could potentially gain access to the .. / .. /etc/psswd file through Local File Inclusion.
 
+![Uploading image.png…]()
 
 Next, I was able to crawl the website using getallurls and then filtered the results to exclude redirects to show less results.
-
-
