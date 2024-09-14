@@ -57,6 +57,8 @@ Description & Solution: I first reviewed the website and was paying close attent
 
 I then followed regular web traffic using Wireshark to identify the OS (Ubuntu), which told me that I could potentially gain access to the .. / .. /etc/psswd file through Local File Inclusion.
 
+![image](https://github.com/user-attachments/assets/e2152124-ac47-4e07-9312-06c8bc612f56)
+
 ![Uploading image.png…]()
 
 Next, I was able to crawl the website using getallurls and then filtered the results to exclude redirects to show less results.
