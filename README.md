@@ -1,64 +1,59 @@
 # Acu-Write-Up
 
-A comprehensive collection of write-ups for Acunetix web vulnerability scans, detailing the identification, exploitation, and mitigation of various web security issues. This repository serves as a resource for security researchers and developers to understand and address vulnerabilities found by Acunetix.
-
-Summary Title: SQLi Vulnerability that allows anyone to login as ‘admin’, leading to further exploit that reveals sensitive server-related information.
-
+Summary Title: SQL Injection Vulnerability Grants Unauthorized Admin Access, Potentially Exposing Sensitive Server Data.
 Target: testasp.vulnweb.com
-Technical severity: Very High (based on Zofixer rating)
+Technical Severity: Very High (according to Zofixer rating).
 
-Location of Vulnerability: http://testphp.vulnweb.com/login.php
+Vulnerability Location: (http://testphp.vulnweb.com/login.php)
 
-Description & Solution: Login page is susceptible to SQL Injection, allowing any user to login as admin. Using SQLMap and BurpSuite, I was able to identify the string ‘ or 1=1 or ‘’=’ can be injected into the tbUsername field to login as ‘admin’.
+Description & Mitigation: The login page is vulnerable to SQL Injection, enabling any user to gain admin access. By utilizing SQLMap and BurpSuite, I discovered that injecting the string ‘ or 1=1 or ‘’=’ into the tbUsername field permits login as the ‘admin’ user.
 
 ![image](https://github.com/user-attachments/assets/33624fab-fb24-4544-930c-70f28318b59d)
 
-Once logged in, I was able to use the admin SessionID to continue test with SQLMap.
+After logging in, I utilized the admin SessionID to conduct further testing with SQLMap.
 
-This revealed that there were more exploitable fields with payloads on the site, such as time-based Blind and Microsoft SQL Server, Stacked Queries.
+This led to the discovery of additional vulnerable fields on the site, including time-based Blind SQL Injection and Stacked Queries for Microsoft SQL Server.
 
 ![image](https://github.com/user-attachments/assets/e8e5d793-0ac8-4787-b064-4300b35d9e8f)
 
 ![image](https://github.com/user-attachments/assets/7f8ef7b4-7286-4f2a-9ec9-0e527fdba454)
 
-Using the Microsoft SQL Server, Stacked Queries payload discovered by SQLMap, I was able to get a list of six databases in testasp.vulnweb.com:
+Using the Stacked Queries payload for Microsoft SQL Server identified by SQLMap, I was able to retrieve a list of six databases from testasp.vulnweb.com.
 
-Remediation/Mitigations:
+Remediation/Mitigation:
 
-One recommendation for mitigating this type of attack would be to use prepared statements and utilize parameterized queries, ensuring users/attackers are not able to manipulate the intent behind query.
+To mitigate this type of attack, it is recommended to implement prepared statements and use parameterized queries, which would prevent users or attackers from manipulating the intent of the queries.
 
-Summary Title: Default credentials in place that allow any user to sign in as admin, without requiring password.
-
+Summary Title: Default Credentials Allow Any User to Log In as Admin Without a Password
 Target: testhtml5.vulnweb.com
-Technical severity: Very High (based on Zofixer rating)
+Technical Severity: Very High (according to Zofixer rating).
 
-Location of Vulnerability: http://testhtml5.vulnweb.com/#/popular
+Vulnerability Location: http://testhtml5.vulnweb.com/#/popular
 
-Description & Solution: Site in question has a login page on the home screen. Clicking on it allows a any user to sign in without requiring password.
+Description & Solution: The site features a login page accessible from the home screen. Users can log in without needing to provide a password.
 
 ![image](https://github.com/user-attachments/assets/9b8bc3d7-d957-472b-b898-b373d05620e8)
 
 ![image](https://github.com/user-attachments/assets/77b309ad-975e-4af1-94ad-b21ddb0cc674)
 
-Once logged in as admin, the attacker can then exploit further vulnerabilities to harvest sensitive information, deface the site, or deploy phishing campaigns.
+Once logged in as admin, the attacker can exploit additional vulnerabilities to access sensitive information, deface the website, or launch phishing campaigns.
 
-Remediation/Mitigations:
+Remediation/Mitigation:
 
-Remediations for this vulnerability are to change or disable the default credentials immediately and to make sure the passwords are long and unique. Reviewing if a system is using default credentials can be done through various tools, some free and others paid.
+To address this vulnerability, it’s crucial to change or disable default credentials immediately and ensure that passwords are both long and unique. Various tools, both free and paid, can help assess whether a system is using default credentials.
 
-Summary Title: Local File Inclusion Vulnerability that allows any user to gain access to sensitive files such as the /etc/passwd file.
-
+Summary Title: Local File Inclusion Vulnerability Enables Access to Sensitive Files, Such as /etc/passwd.
 Target: testphp.vulnweb.com
-Technical severity: Very High
+Technical Severity: Very High
 
-Location of Vulnerability: http://testphpvulnweb.com/showimage.php?file=./pictures/1.jpg
+Vulnerability Location: (http://testphpvulnweb.com/showimage.php?file=./pictures/1.jpg)
 
-Description & Solution: I first reviewed the website and was paying close attention to the URL, looking for the potential of Local File Inclusion (LFI) vulernabilities. I found that URLs to images within the site used scripts that accepted file names as parameters, such as with http://testphpvulnweb.com/showimage.php?file=./pictures/1.jpg
+Description & Solution: I examined the website closely, particularly the URL, to identify potential Local File Inclusion (LFI) vulnerabilities. I discovered that image URLs utilized scripts that accepted filenames as parameters, like the one mentioned above.
 
-I then followed regular web traffic using Wireshark to identify the OS (Ubuntu), which told me that I could potentially gain access to the .. / .. /etc/psswd file through Local File Inclusion.
+By monitoring regular web traffic with Wireshark, I determined the operating system was Ubuntu, indicating that I could potentially access the /etc/passwd file through Local File Inclusion.
 
 ![image](https://github.com/user-attachments/assets/e2152124-ac47-4e07-9312-06c8bc612f56)
 
 ![Uploading image.png…]()
 
-Next, I was able to crawl the website using getallurls and then filtered the results to exclude redirects to show less results.
+Next, I crawled the website using getallurls, filtering the results to exclude redirects in order to streamline the output.
